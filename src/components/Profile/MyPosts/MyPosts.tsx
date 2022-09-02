@@ -4,11 +4,14 @@ import { Post } from "./Post/Post";
 import { v1 } from "uuid";
 
 export const MyPosts = () => {
-  let postData = [
+  let posts = [
     { id: v1(), message: "Hi, how are you?", likesCount: 6 },
     { id: v1(), message: "It's my first post", likesCount: 23 },
   ];
 
+  const postsElements = posts.map((p) => {
+    return <Post message={p.message} likeCount={p.likesCount} id={p.id} />;
+  });
   return (
     <div className={s.postsBlock}>
       <h3>my posts</h3>
@@ -20,16 +23,7 @@ export const MyPosts = () => {
           <button>Add post</button>
         </div>
       </div>
-      <div className={s.posts}>
-        <Post
-          message={postData[0].message}
-          likeCount={postData[0].likesCount}
-        />
-        <Post
-          message={postData[1].message}
-          likeCount={postData[1].likesCount}
-        />
-      </div>
+      <div className={s.posts}>{postsElements}</div>
     </div>
   );
 };
