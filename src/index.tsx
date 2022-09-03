@@ -1,15 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { v1 } from "uuid";
+
+export type Posts = {
+  id: string;
+  message: string;
+  likesCount: number;
+};
+
+let posts: Array<Posts> = [
+  { id: v1(), message: "Hi, how are you?", likesCount: 6 },
+  { id: v1(), message: "It's my first post", likesCount: 23 },
+];
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <App />
+    <App posts={posts} />
   </React.StrictMode>
 );
 

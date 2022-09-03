@@ -8,8 +8,13 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { News } from "./components/News/News";
 import { Music } from "./components/Music/Music";
 import { Settings } from "./components/Settings/Settings";
+import { Posts } from "./index";
 
-function App() {
+type AppPropsType = {
+  posts: Array<Posts>;
+};
+
+function App(props: AppPropsType) {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
@@ -17,7 +22,10 @@ function App() {
         <Navbar />
         <div className="app-wrapper-content">
           <Route path={"/dialogs"} render={() => <Dialogs />} />
-          <Route path={"/profile"} render={() => <Profile />} />
+          <Route
+            path={"/profile"}
+            render={() => <Profile posts={props.posts} />}
+          />
           <Route path={"/news"} render={() => <News />} />
           <Route path={"/music"} render={() => <Music />} />
           <Route path={"/settings"} render={() => <Settings />} />
