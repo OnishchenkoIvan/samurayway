@@ -1,13 +1,8 @@
 import React from "react";
 import s from "./Post.module.css";
+import { PostsType } from "../../../../redux/state";
 
-type Post = {
-  id: string;
-  message: string;
-  likeCount: number;
-};
-
-export const Post = (props: Post) => {
+export const Post = (props: PostsType) => {
   return (
     <div className={s.item}>
       <img
@@ -16,7 +11,7 @@ export const Post = (props: Post) => {
       />{" "}
       {props.message}
       <div>
-        <span>like {props.likeCount}</span>
+        <span>like {props.likesCount}</span>
       </div>
     </div>
   );
