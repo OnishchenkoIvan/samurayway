@@ -3,5 +3,17 @@ import s from "./../Dialogs.module.css";
 import { MessagesType } from "../../../redux/state";
 
 export const Message = (props: MessagesType) => {
-  return <div className={s.dialog}>{props.message}</div>;
+  const newMessageElement = React.createRef<HTMLTextAreaElement>();
+
+  const addMessage = () => {
+    const text = newMessageElement.current?.value;
+    alert(text);
+  };
+  return (
+    <div>
+      <div className={s.dialog}>{props.message}</div>
+      <textarea ref={newMessageElement}></textarea>
+      <button onClick={addMessage}>send</button>
+    </div>
+  );
 };

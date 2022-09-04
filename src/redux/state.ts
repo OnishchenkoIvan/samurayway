@@ -60,3 +60,12 @@ export let state: StatePropsType = {
   },
   sidebar: {},
 };
+
+export let addPost = (postMessage: string) => {
+  const newPost: PostsType = {
+    id: v1(),
+    message: postMessage,
+    likesCount: 0,
+  };
+  state.profilePage.posts.push(newPost);
+};
