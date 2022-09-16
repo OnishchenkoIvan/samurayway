@@ -13,6 +13,7 @@ import { StatePropsType } from "./redux/state";
 type AppPropsType = {
   state: StatePropsType;
   addPost: (postMessage: string) => void;
+  changeNewTextCallback: (newText: string) => void;
 };
 
 function App(props: AppPropsType) {
@@ -30,7 +31,9 @@ function App(props: AppPropsType) {
           render={() => (
             <Profile
               profilePage={props.state.profilePage}
+              newPostText={props.state.profilePage.newPostText}
               addPost={props.addPost}
+              changeNewTextCallback={props.changeNewTextCallback}
             />
           )}
         />
