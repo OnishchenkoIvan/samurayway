@@ -1,5 +1,8 @@
 import { v1 } from "uuid";
-import { rerenderEntireTree } from "../render";
+
+let rerenderEntireTree = () => {
+  console.log("State changed");
+};
 
 export type StatePropsType = {
   profilePage: ProfilePageType;
@@ -41,7 +44,7 @@ export let state: StatePropsType = {
       { id: v1(), message: "Hi, how are you?", likesCount: 6 },
       { id: v1(), message: "It's my first post", likesCount: 23 },
     ],
-    newPostText: "it-kamasutre.com",
+    newPostText: "it-kamasutra.com",
   },
   dialogsPage: {
     dialogs: [
@@ -64,7 +67,7 @@ export let state: StatePropsType = {
   sidebar: {},
 };
 
-export let addPost = (postMessage: string) => {
+export const addPost = (postMessage: string) => {
   const newPost: PostsType = {
     id: v1(),
     message: postMessage,
@@ -72,10 +75,16 @@ export let addPost = (postMessage: string) => {
   };
   state.profilePage.posts.push(newPost);
   state.profilePage.newPostText = "";
-  rerenderEntireTree(state);
+  rerenderEntireTree();
 };
 
-export let updateNewPostText = (newText: string) => {
+export const updateNewPostText = (newText: string) => {
   state.profilePage.newPostText = newText;
-  rerenderEntireTree(state);
+  rerenderEntireTree();
 };
+
+export const subscribe = (observer: () => void) => {
+  rerenderEntireTree = observer;
+};
+
+// store - OOP
