@@ -1,9 +1,5 @@
 import { v1 } from "uuid";
 
-let rerenderEntireTree = () => {
-  console.log("State changed");
-};
-
 export type StatePropsType = {
   profilePage: ProfilePageType;
   dialogsPage: DialogPageType;
@@ -38,53 +34,66 @@ export type DialogPageType = {
 
 export type SidebarType = {};
 
-export let state: StatePropsType = {
-  profilePage: {
-    posts: [
-      { id: v1(), message: "Hi, how are you?", likesCount: 6 },
-      { id: v1(), message: "It's my first post", likesCount: 23 },
-    ],
-    newPostText: "it-kamasutra.com",
+export type StoreType = {
+  _state: StatePropsType;
+  updateNewPostText: (newText: string) => void;
+  addPost: (postMessage: string) => void;
+  _rerenderEntireTree: () => void;
+  subscribe: (observer: () => void) => void;
+  getState: () => StatePropsType;
+};
+
+export let store: StoreType = {
+  _state: {
+    profilePage: {
+      posts: [
+        { id: v1(), message: "Hi, how are you?", likesCount: 6 },
+        { id: v1(), message: "It's my first post", likesCount: 23 },
+      ],
+      newPostText: "it-kamasutra.com",
+    },
+    dialogsPage: {
+      dialogs: [
+        { id: v1(), name: "Dimych" },
+        { id: v1(), name: "Andrew" },
+        { id: v1(), name: "Sveta" },
+        { id: v1(), name: "Sasha" },
+        { id: v1(), name: "Victor" },
+        { id: v1(), name: "Valera" },
+      ],
+      messages: [
+        { id: v1(), message: "Hi" },
+        { id: v1(), message: "How is your it-kamasutra" },
+        { id: v1(), message: "Yo" },
+        { id: v1(), message: "yooo" },
+        { id: v1(), message: "hey" },
+        { id: v1(), message: "ky" },
+      ],
+    },
+    sidebar: {},
   },
-  dialogsPage: {
-    dialogs: [
-      { id: v1(), name: "Dimych" },
-      { id: v1(), name: "Andrew" },
-      { id: v1(), name: "Sveta" },
-      { id: v1(), name: "Sasha" },
-      { id: v1(), name: "Victor" },
-      { id: v1(), name: "Valera" },
-    ],
-    messages: [
-      { id: v1(), message: "Hi" },
-      { id: v1(), message: "How is your it-kamasutra" },
-      { id: v1(), message: "Yo" },
-      { id: v1(), message: "yooo" },
-      { id: v1(), message: "hey" },
-      { id: v1(), message: "ky" },
-    ],
+  updateNewPostText(newText: string) {
+    this._state.profilePage.newPostText = newText;
+    this._rerenderEntireTree();
   },
-  sidebar: {},
+  addPost(postMessage: string) {
+    const newPost: PostsType = {
+      id: v1(),
+      message: postMessage,
+      likesCount: 0,
+    };
+    this._state.profilePage.posts.push(newPost);
+    this._state.profilePage.newPostText = "";
+    this._rerenderEntireTree();
+  },
+  _rerenderEntireTree() {
+    console.log("State changed");
+  },
+  subscribe(observer) {
+    this._rerenderEntireTree = observer;
+  },
+  getState() {
+    return this._state;
+  },
 };
-
-export const addPost = (postMessage: string) => {
-  const newPost: PostsType = {
-    id: v1(),
-    message: postMessage,
-    likesCount: 0,
-  };
-  state.profilePage.posts.push(newPost);
-  state.profilePage.newPostText = "";
-  rerenderEntireTree();
-};
-
-export const updateNewPostText = (newText: string) => {
-  state.profilePage.newPostText = newText;
-  rerenderEntireTree();
-};
-
-export const subscribe = (observer: () => void) => {
-  rerenderEntireTree = observer;
-};
-
 // store - OOP

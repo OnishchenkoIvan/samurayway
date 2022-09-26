@@ -8,15 +8,17 @@ import { Route } from "react-router-dom";
 import { News } from "./components/News/News";
 import { Music } from "./components/Music/Music";
 import { Settings } from "./components/Settings/Settings";
-import { StatePropsType } from "./redux/state";
+import { StoreType } from "./redux/state";
 
 type AppPropsType = {
-  state: StatePropsType;
-  addPost: (postMessage: string) => void;
-  changeNewTextCallback: (newText: string) => void;
+  // state: StatePropsType;
+  // addPost: (postMessage: string) => void;
+  // changeNewTextCallback: (newText: string) => void;
+  store: StoreType;
 };
 
-function App(props: AppPropsType) {
+const App: React.FC<AppPropsType> = (props) => {
+  const state = props.store.getState();
   return (
     <div className="app-wrapper">
       <Header />
@@ -24,16 +26,18 @@ function App(props: AppPropsType) {
       <div className="app-wrapper-content">
         <Route
           path={"/dialogs"}
-          render={() => <Dialogs dialogPage={props.state.dialogsPage} />}
+          render={() => <Dialogs dialogPage={state.dialogsPage} />}
         />
         <Route
           path={"/profile"}
           render={() => (
             <Profile
-              profilePage={props.state.profilePage}
-              newPostText={props.state.profilePage.newPostText}
-              addPost={props.addPost}
-              changeNewTextCallback={props.changeNewTextCallback}
+              profilePage={state.profilePage}
+              newPostText={state.profilePage.newPostText}
+              addPost={props.store.addPost.bind(props.store)}
+              changeNewTextCallback={props.store.updateNewPostText.bind(
+                props.store
+              )}
             />
           )}
         />
@@ -43,6 +47,6 @@ function App(props: AppPropsType) {
       </div>
     </div>
   );
-}
+};
 
 export default App;
