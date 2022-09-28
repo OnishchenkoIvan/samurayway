@@ -20,6 +20,7 @@ export const Profile = (props: ProfilePropsType) => {
         newPostText={props.profilePage.newPostText}
         addPost={props.addPost}
         changeNewTextCallback={props.changeNewTextCallback}
+        dispatch={props.dispatch}
       />
     </div>
   );
