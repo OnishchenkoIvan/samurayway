@@ -34,6 +34,7 @@ const App: React.FC<AppPropsType> = (props) => {
             <Profile
               profilePage={state.profilePage}
               newPostText={state.profilePage.newPostText}
+              dispatch={props.store.dispatch.bind(props.store)}
               addPost={props.store.addPost.bind(props.store)}
               changeNewTextCallback={props.store.updateNewPostText.bind(
                 props.store

@@ -41,9 +41,22 @@ export type StoreType = {
   _rerenderEntireTree: () => void;
   subscribe: (observer: () => void) => void;
   getState: () => StatePropsType;
+  dispatch: (action: ActionsTypes) => void;
 };
 
-export let store: StoreType = {
+type AddPostActionType = {
+  type: "Add-Post";
+  postText: string;
+};
+
+type ChangeNewTextActionType = {
+  type: "Change-New-Text";
+  newText: string;
+};
+
+export type ActionsTypes = AddPostActionType | ChangeNewTextActionType;
+
+export const store: StoreType = {
   _state: {
     profilePage: {
       posts: [
@@ -94,6 +107,21 @@ export let store: StoreType = {
   },
   getState() {
     return this._state;
+  },
+  dispatch(action) {
+    if (action.type === "Add-Post") {
+      const newPost: PostsType = {
+        id: v1(),
+        message: action.postText,
+        likesCount: 0,
+      };
+      this._state.profilePage.posts.push(newPost);
+      this._state.profilePage.newPostText = "";
+      this._rerenderEntireTree();
+    } else if (action.type === "Change-New-Text") {
+      this._state.profilePage.newPostText = action.newText;
+      this._rerenderEntireTree();
+    }
   },
 };
 // store - OOP
