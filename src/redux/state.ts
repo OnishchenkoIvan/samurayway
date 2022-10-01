@@ -1,5 +1,10 @@
 import { v1 } from "uuid";
 
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const UPDATE_NEW_MESSAGE_BODY = "UPDATE_NEW_MESSAGE_BODY";
+const SEND_MESSAGE = "SEND_MESSAGE";
+
 export type StatePropsType = {
   profilePage: ProfilePageType;
   dialogsPage: DialogPageType;
@@ -30,6 +35,7 @@ export type ProfilePageType = {
 export type DialogPageType = {
   dialogs: Array<DialogsType>;
   messages: Array<MessagesType>;
+  newMessageBody: string;
 };
 
 export type SidebarType = {};
@@ -45,20 +51,35 @@ export type StoreType = {
 };
 
 export type ActionsTypes =
-  | ReturnType<typeof addPostAc>
-  | ReturnType<typeof changeNewTextAc>;
+  | ReturnType<typeof addPostActionCreator>
+  | ReturnType<typeof updateNewPostTextActionCreator>
+  | ReturnType<typeof updateNewMessageBodyCreator>
+  | ReturnType<typeof sendMessageCreator>;
 
-export const addPostAc = (postText: string) => {
+export const addPostActionCreator = (postText: string) => {
   return {
-    type: "Add-Post",
+    type: ADD_POST,
     postText: postText,
   } as const;
 };
 
-export const changeNewTextAc = (newText: string) => {
+export const updateNewPostTextActionCreator = (newText: string) => {
   return {
-    type: "Change-New-Text",
+    type: UPDATE_NEW_POST_TEXT,
     newText: newText,
+  } as const;
+};
+
+export const updateNewMessageBodyCreator = (newMessage: string) => {
+  return {
+    type: UPDATE_NEW_MESSAGE_BODY,
+    body: newMessage,
+  } as const;
+};
+export const sendMessageCreator = (newMessage: string) => {
+  return {
+    type: SEND_MESSAGE,
+    body: newMessage,
   } as const;
 };
 
@@ -88,6 +109,7 @@ export const store: StoreType = {
         { id: v1(), message: "hey" },
         { id: v1(), message: "ky" },
       ],
+      newMessageBody: "",
     },
     sidebar: {},
   },
@@ -115,7 +137,7 @@ export const store: StoreType = {
     return this._state;
   },
   dispatch(action) {
-    if (action.type === "Add-Post") {
+    if (action.type === ADD_POST) {
       const newPost: PostsType = {
         id: v1(),
         message: action.postText,
@@ -124,8 +146,16 @@ export const store: StoreType = {
       this._state.profilePage.posts.push(newPost);
       this._state.profilePage.newPostText = "";
       this._rerenderEntireTree();
-    } else if (action.type === "Change-New-Text") {
+    } else if (action.type === UPDATE_NEW_POST_TEXT) {
       this._state.profilePage.newPostText = action.newText;
+      this._rerenderEntireTree();
+    } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+      this._state.dialogsPage.newMessageBody = action.body;
+      this._rerenderEntireTree();
+    } else if (action.type === SEND_MESSAGE) {
+      let body = this._state.dialogsPage.newMessageBody;
+      this._state.dialogsPage.newMessageBody = "";
+      this._state.dialogsPage.messages.push({ id: v1(), message: body });
       this._rerenderEntireTree();
     }
   },

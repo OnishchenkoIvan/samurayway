@@ -12,8 +12,8 @@ export const Message = (props: MessagesType) => {
   return (
     <div>
       <div className={s.dialog}>{props.message}</div>
-      <textarea ref={newMessageElement}></textarea>
-      <button onClick={addMessage}>send</button>
+      {/*<textarea ref={newMessageElement}></textarea>*/}
+      {/*<button onClick={addMessage}>send</button>*/}
     </div>
   );
 };
