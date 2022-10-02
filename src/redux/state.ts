@@ -1,9 +1,15 @@
 import { v1 } from "uuid";
-
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const UPDATE_NEW_MESSAGE_BODY = "UPDATE_NEW_MESSAGE_BODY";
-const SEND_MESSAGE = "SEND_MESSAGE";
+import {
+  addPostActionCreator,
+  ProfileReducer,
+  updateNewPostTextActionCreator,
+} from "./profile-reducer";
+import {
+  DialogsReducer,
+  sendMessageCreator,
+  updateNewMessageBodyCreator,
+} from "./dialogs-reducer";
+import { SidebarReducer } from "./sidebar-reducer";
 
 export type StatePropsType = {
   profilePage: ProfilePageType;
@@ -55,33 +61,6 @@ export type ActionsTypes =
   | ReturnType<typeof updateNewPostTextActionCreator>
   | ReturnType<typeof updateNewMessageBodyCreator>
   | ReturnType<typeof sendMessageCreator>;
-
-export const addPostActionCreator = (postText: string) => {
-  return {
-    type: ADD_POST,
-    postText: postText,
-  } as const;
-};
-
-export const updateNewPostTextActionCreator = (newText: string) => {
-  return {
-    type: UPDATE_NEW_POST_TEXT,
-    newText: newText,
-  } as const;
-};
-
-export const updateNewMessageBodyCreator = (newMessage: string) => {
-  return {
-    type: UPDATE_NEW_MESSAGE_BODY,
-    body: newMessage,
-  } as const;
-};
-export const sendMessageCreator = (newMessage: string) => {
-  return {
-    type: SEND_MESSAGE,
-    body: newMessage,
-  } as const;
-};
 
 export const store: StoreType = {
   _state: {
@@ -137,27 +116,11 @@ export const store: StoreType = {
     return this._state;
   },
   dispatch(action) {
-    if (action.type === ADD_POST) {
-      const newPost: PostsType = {
-        id: v1(),
-        message: action.postText,
-        likesCount: 0,
-      };
-      this._state.profilePage.posts.push(newPost);
-      this._state.profilePage.newPostText = "";
-      this._rerenderEntireTree();
-    } else if (action.type === UPDATE_NEW_POST_TEXT) {
-      this._state.profilePage.newPostText = action.newText;
-      this._rerenderEntireTree();
-    } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-      this._state.dialogsPage.newMessageBody = action.body;
-      this._rerenderEntireTree();
-    } else if (action.type === SEND_MESSAGE) {
-      let body = this._state.dialogsPage.newMessageBody;
-      this._state.dialogsPage.newMessageBody = "";
-      this._state.dialogsPage.messages.push({ id: v1(), message: body });
-      this._rerenderEntireTree();
-    }
+    this._state = ProfileReducer(this._state, action);
+    this._state = DialogsReducer(this._state, action);
+    this._state = SidebarReducer(this._state, action);
+
+    this._rerenderEntireTree();
   },
 };
 // store - OOP
