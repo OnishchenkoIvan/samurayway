@@ -8,13 +8,13 @@ import { Route } from "react-router-dom";
 import { News } from "./components/News/News";
 import { Music } from "./components/Music/Music";
 import { Settings } from "./components/Settings/Settings";
-import { StatePropsType, StoreType } from "./redux/state";
+import { StoreReduxType } from "./redux/redux-store";
 
 type AppPropsType = {
   // state: StatePropsType;
   // addPost: (postMessage: string) => void;
   // changeNewTextCallback: (newText: string) => void;
-  store: StoreType;
+  store: StoreReduxType;
 };
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -30,17 +30,7 @@ const App: React.FC<AppPropsType> = (props) => {
         />
         <Route
           path={"/profile"}
-          render={() => (
-            <Profile
-              profilePage={state.profilePage}
-              newPostText={state.profilePage.newPostText}
-              dispatch={props.store.dispatch.bind(props.store)}
-              addPost={props.store.addPost.bind(props.store)}
-              changeNewTextCallback={props.store.updateNewPostText.bind(
-                props.store
-              )}
-            />
-          )}
+          render={() => <Profile store={props.store} />}
         />
         <Route path={"/news"} render={() => <News />} />
         <Route path={"/music"} render={() => <Music />} />

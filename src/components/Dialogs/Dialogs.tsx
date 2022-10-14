@@ -6,16 +6,14 @@ import {
   sendMessageCreator,
   updateNewMessageBodyCreator,
 } from "../../redux/dialogs-reducer";
-import { store, StoreType } from "../../redux/state";
+import { store, StoreReduxType } from "../../redux/redux-store";
 
 type DialogsPropsType = {
-  // dialogPage: DialogPageType;
-  store: StoreType;
+  store: StoreReduxType;
 };
 
 export const Dialogs = (props: DialogsPropsType) => {
-  let state = store.getState().dialogsPage;
-
+  let state = props.store.getState().dialogsReducer;
   let dialogsElements = state.dialogs.map((d) => {
     return <DialogItem name={d.name} id={d.id} />;
   });
@@ -29,6 +27,7 @@ export const Dialogs = (props: DialogsPropsType) => {
   let onSendMessageClick = () => {
     store.dispatch(sendMessageCreator(newMessageBody));
   };
+
   let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     let body = e.target.value;
     store.dispatch(updateNewMessageBodyCreator(body));

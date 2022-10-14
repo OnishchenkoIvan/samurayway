@@ -1,15 +1,15 @@
 import { v1 } from "uuid";
 import {
   addPostActionCreator,
-  ProfileReducer,
+  profileReducer,
   updateNewPostTextActionCreator,
 } from "./profile-reducer";
 import {
-  DialogsReducer,
+  dialogsReducer,
   sendMessageCreator,
   updateNewMessageBodyCreator,
 } from "./dialogs-reducer";
-import { SidebarReducer } from "./sidebar-reducer";
+import { sidebarReducer } from "./sidebar-reducer";
 
 export type StatePropsType = {
   profilePage: ProfilePageType;
@@ -116,9 +116,9 @@ export const store: StoreType = {
     return this._state;
   },
   dispatch(action) {
-    this._state = ProfileReducer(this._state, action);
-    this._state = DialogsReducer(this._state, action);
-    this._state = SidebarReducer(this._state, action);
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+    this._state.sidebar = sidebarReducer(this._state.sidebar, action);
 
     this._rerenderEntireTree();
   },
