@@ -6,24 +6,17 @@ import {
   addPostActionCreator,
   updateNewPostTextActionCreator,
 } from "../../redux/profile-reducer";
+import { MyPostContainer } from "./MyPosts/MyPostContainer";
 
 type ProfilePropsType = {
   store: StoreReduxType;
 };
 
-export const Profile = (props: ProfilePropsType) => {
-  const state = props.store.getState();
-
+export const Profile = ({ store }: ProfilePropsType) => {
   return (
     <div>
       <ProfileInfo />
-      <MyPosts
-        posts={state.profileReducer.posts}
-        newPostText={state.profileReducer.newPostText}
-        addPost={addPostActionCreator}
-        changeNewTextCallback={updateNewPostTextActionCreator}
-        dispatch={props.store.dispatch}
-      />
+      <MyPostContainer store={store} />
     </div>
   );
 };

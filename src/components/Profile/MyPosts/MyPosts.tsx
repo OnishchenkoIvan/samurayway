@@ -10,22 +10,30 @@ import {
 type MyPostsPropsType = {
   posts: Array<PostsType>;
   newPostText: string;
-  addPost: (postMessage: string) => void;
-  changeNewTextCallback: (newText: string) => void;
-  dispatch: (action: ActionsTypes) => void;
+  handleAddPost: (postMessage: string) => void;
+  onPostChange: (value: string) => void;
+  // changeNewTextCallback: (newText: string) => void;
+  // dispatch: (action: ActionsTypes) => void;
 };
 
-export const MyPosts = (props: MyPostsPropsType) => {
-  const postsElements = props.posts.map((p) => {
+export const MyPosts = ({
+  handleAddPost,
+  posts,
+  newPostText,
+  onPostChange,
+}: MyPostsPropsType) => {
+  const postsElements = posts.map((p) => {
     return <Post message={p.message} likesCount={p.likesCount} id={p.id} />;
   });
 
   let addPost = () => {
-    props.dispatch(addPostActionCreator(props.newPostText));
+    handleAddPost(newPostText);
+    // props.dispatch(addPostActionCreator(props.newPostText));
   };
 
-  let onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.dispatch(updateNewPostTextActionCreator(e.currentTarget.value));
+  let onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    onPostChange(e.currentTarget.value);
+    // props.dispatch(updateNewPostTextActionCreator(e.currentTarget.value));
   };
 
   return (
@@ -33,7 +41,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
       <h3>my posts</h3>
       <div>
         <div>
-          <textarea onChange={onPostChange} value={props.newPostText} />
+          <textarea onChange={onChange} value={newPostText} />
         </div>
         <div>
           <button onClick={addPost}>Add post</button>
