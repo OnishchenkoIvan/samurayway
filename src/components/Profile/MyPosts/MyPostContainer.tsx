@@ -4,30 +4,32 @@ import {
   updateNewPostTextActionCreator,
 } from "../../../redux/profile-reducer";
 import { MyPosts } from "./MyPosts";
-import { StoreReduxType } from "../../../redux/redux-store";
+import { StoreContext } from "../../../StoreContext";
 
-type Props = {
-  store: StoreReduxType;
-};
-export const MyPostContainer = ({ store }: Props) => {
-  const state = store.getState();
-
-  const handleAddPost = () => {
-    store.dispatch(addPostActionCreator(state.profileReducer.newPostText));
-  };
-
-  const onPostChange = (newPostText: string) => {
-    store.dispatch(updateNewPostTextActionCreator(newPostText));
-  };
-
+export const MyPostContainer = () => {
   return (
-    <div>
-      <MyPosts
-        handleAddPost={handleAddPost}
-        onPostChange={onPostChange}
-        newPostText={state.profileReducer.newPostText}
-        posts={state.profileReducer.posts}
-      />
-    </div>
+    <StoreContext.Consumer>
+      {(store) => {
+        const state = store.getState();
+
+        const handleAddPost = () => {
+          store.dispatch(
+            addPostActionCreator(state.profileReducer.newPostText)
+          );
+        };
+
+        const onPostChange = (newPostText: string) => {
+          store.dispatch(updateNewPostTextActionCreator(newPostText));
+        };
+        return (
+          <MyPosts
+            handleAddPost={handleAddPost}
+            onPostChange={onPostChange}
+            newPostText={state.profileReducer.newPostText}
+            posts={state.profileReducer.posts}
+          />
+        );
+      }}
+    </StoreContext.Consumer>
   );
 };
