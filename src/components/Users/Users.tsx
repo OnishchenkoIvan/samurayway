@@ -5,8 +5,10 @@ import axios from "axios";
 import { UsersPropsType } from "./UsersContainer";
 
 export class Users extends React.Component<UsersPropsType, {}> {
-  constructor(props: UsersPropsType) {
-    super(props);
+  // constructor(props: UsersPropsType) {
+  //   super(props);
+  // } not obvious
+  componentDidMount() {
     axios
       .get("https://social-network.samuraijs.com/api/1.0/users")
       .then((response) => {
