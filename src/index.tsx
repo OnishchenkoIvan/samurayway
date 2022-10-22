@@ -13,13 +13,13 @@ const root = ReactDOM.createRoot(
 
 const rerenderEntireTree = (state: AppStateType) => {
   root.render(
-    <React.StrictMode>
-      <BrowserRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </BrowserRouter>
-    </React.StrictMode>
+    // <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
+    // </React.StrictMode>
   );
 };
 

@@ -6,12 +6,16 @@ type UserLocationType = {
   city: string;
   county: string;
 };
+type UserPhotos = {
+  small: string;
+  large: string;
+};
 
 export type UserType = {
   id: string;
-  photoUrl: string;
+  photos: UserPhotos;
   followed: boolean;
-  fullName: string;
+  name: string;
   status: string;
   location: UserLocationType;
 };
@@ -21,32 +25,7 @@ export type InitialStateType = {
 };
 
 let initialState: InitialStateType = {
-  users: [
-    // {
-    //   id: v1(),
-    //   photoUrl: "https://klike.net/uploads/posts/2019-03/1551511801_1.jpg",
-    //   followed: false,
-    //   fullName: "Dmitriy",
-    //   status: "I'm a boss",
-    //   location: { city: "Minsk", county: "Belarus" },
-    // },
-    // {
-    //   id: v1(),
-    //   photoUrl: "https://klike.net/uploads/posts/2019-03/1551511801_1.jpg",
-    //   followed: true,
-    //   fullName: "Ivan",
-    //   status: "I'm a frontend developer",
-    //   location: { city: "Sevastopol", county: "Russia" },
-    // },
-    // {
-    //   id: v1(),
-    //   photoUrl: "https://klike.net/uploads/posts/2019-03/1551511801_1.jpg",
-    //   followed: false,
-    //   fullName: "Alex",
-    //   status: "I'm a student",
-    //   location: { city: "Kiev", county: "Ukraine" },
-    // },
-  ],
+  users: [],
 };
 
 type ActionsTypes =
