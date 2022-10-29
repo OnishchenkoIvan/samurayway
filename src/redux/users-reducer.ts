@@ -33,7 +33,7 @@ let initialState: InitialStateType = {
   users: [],
   pageSize: 5,
   totalUsersCount: 0,
-  currentPage: 5,
+  currentPage: 1,
 };
 
 type ActionsTypes =
