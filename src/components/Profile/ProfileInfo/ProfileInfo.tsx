@@ -1,16 +1,28 @@
 import React from "react";
 import s from "./ProfileInfo.module.css";
+import { Preloader } from "../../common/preload/Preloader";
+import { ProfileType } from "../../../redux/store";
 
-export const ProfileInfo = () => {
-  return (
-    <div>
+type ProfileInfoPropsType = {
+  profile: ProfileType | null;
+};
+
+export const ProfileInfo = (props: ProfileInfoPropsType) => {
+  if (!props.profile) {
+    return <Preloader />;
+  } else
+    return (
       <div>
-        <img
-          src="https://images.pexels.com/photos/994605/pexels-photo-994605.jpeg?cs=srgb&dl=pexels-fabian-wiktor-994605.jpg&fm=jpg"
-          alt={"beach"}
-        />
+        <div>
+          <img
+            src="https://images.pexels.com/photos/994605/pexels-photo-994605.jpeg?cs=srgb&dl=pexels-fabian-wiktor-994605.jpg&fm=jpg"
+            alt={"beach"}
+          />
+        </div>
+        <div className={s.descriptionBlock}>
+          <img src={props.profile?.photos.large} alt={"avatar"} />
+          ava + description
+        </div>
       </div>
-      <div className={s.descriptionBlock}>ava + description</div>
-    </div>
-  );
+    );
 };
