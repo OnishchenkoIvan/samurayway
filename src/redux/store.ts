@@ -31,7 +31,7 @@ export type MessagesType = {
 };
 
 export type ProfileType = {
-  userId: number | null;
+  userId: string | null;
   lookingForAJob: boolean | null;
   lookingForAJobDescription: string | null;
   fullName: string | null;
