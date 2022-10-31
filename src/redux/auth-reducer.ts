@@ -1,13 +1,8 @@
+import { HeaderLoginType } from "./store";
+
 const SET_USERS_DATA = "SET_USERS_DATA";
 
-export type InitialStateType = {
-  id: string | null;
-  email: string | null;
-  login: string | null;
-  isAuth: boolean;
-};
-
-let initialState: InitialStateType = {
+let initialState: HeaderLoginType = {
   id: null,
   email: null,
   login: null,
@@ -17,14 +12,15 @@ let initialState: InitialStateType = {
 type ActionsTypes = ReturnType<typeof setAuthUserData>;
 
 export const authReducer = (
-  state: InitialStateType = initialState,
+  state: HeaderLoginType = initialState,
   action: ActionsTypes
-): InitialStateType => {
+): HeaderLoginType => {
   switch (action.type) {
     case SET_USERS_DATA:
       return {
         ...state,
         ...action.data,
+        isAuth: true,
       };
 
     default:

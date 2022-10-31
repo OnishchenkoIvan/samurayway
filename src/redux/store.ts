@@ -51,6 +51,13 @@ export type ProfileType = {
   };
 };
 
+export type HeaderLoginType = {
+  id: string | null;
+  email: string | null;
+  login: string | null;
+  isAuth: boolean;
+};
+
 export type ProfilePageType = {
   posts: Array<PostsType>;
   newPostText: string;

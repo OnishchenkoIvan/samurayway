@@ -1,8 +1,9 @@
 import React from "react";
 import s from "./Header.module.css";
 import { NavLink } from "react-router-dom";
+import { HeaderLoginType } from "../../redux/store";
 
-export const Header = (props: any) => {
+export const Header = (props: HeaderLoginType) => {
   return (
     <header className={s.header}>
       <img
