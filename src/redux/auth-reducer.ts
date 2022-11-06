@@ -1,4 +1,5 @@
 import { HeaderLoginType } from "./store";
+import { authAPI } from "../api/api";
 
 const SET_USERS_DATA = "SET_USERS_DATA";
 
@@ -30,3 +31,13 @@ export const authReducer = (
 
 export const setAuthUserData = (id: string, email: string, login: string) =>
   ({ type: SET_USERS_DATA, data: { id, email, login } } as const);
+
+export const getAuthUserData =
+  () => (dispatch: (callback: ActionsTypes) => void) => {
+    return authAPI.me().then((response) => {
+      if (response.data.resultCode === 0) {
+        let { id, email, login } = response.data.data;
+        dispatch(setAuthUserData(id, email, login));
+      }
+    });
+  };

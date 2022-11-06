@@ -1,5 +1,6 @@
 import {
   addPostActionCreator,
+  getUserProfile,
   setUserProfile,
   updateNewPostTextActionCreator,
 } from "./profile-reducer";
