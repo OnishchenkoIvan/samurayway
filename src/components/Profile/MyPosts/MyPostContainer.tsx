@@ -9,34 +9,6 @@ import { AppStateType, store } from "../../../redux/redux-store";
 import { Dispatch } from "redux";
 import { PostsType } from "../../../redux/store";
 
-// export const MyPostContainer = () => {
-//   return (
-//     <StoreContext.Consumer>
-//       {(store) => {
-//         const state = store.getState();
-//
-//         const handleAddPost = () => {
-//           store.dispatch(
-//             addPostActionCreator(state.profileReducer.newPostText)
-//           );
-//         };
-//
-//         const onPostChange = (newPostText: string) => {
-//           store.dispatch(updateNewPostTextActionCreator(newPostText));
-//         };
-//         return (
-//           <MyPosts
-//             handleAddPost={handleAddPost}
-//             onPostChange={onPostChange}
-//             newPostText={state.profileReducer.newPostText}
-//             posts={state.profileReducer.posts}
-//           />
-//         );
-//       }}
-//     </StoreContext.Consumer>
-//   );
-// };
-
 type MapStatePropsType = {
   posts: PostsType[];
   newPostText: string;

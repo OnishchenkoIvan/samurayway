@@ -1,10 +1,17 @@
-import { ActionsTypes, PostsType, ProfilePageType, ProfileType } from "./store";
+import {
+  ActionsTypes,
+  AppThunk,
+  PostsType,
+  ProfilePageType,
+  ProfileType,
+} from "./store";
 import { v1 } from "uuid";
-import { usersAPI } from "../api/api";
+import { profileAPI, usersAPI } from "../api/api";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_STATUS = "SET_STATUS";
 
 export const addPostActionCreator = (postText: string) => {
   return {
@@ -26,10 +33,35 @@ export const getUserProfile =
     });
   };
 
+export const getStatus =
+  (userId: string): AppThunk =>
+  (dispatch) => {
+    profileAPI.getStatus(userId).then((response) => {
+      dispatch(setStatus(response.data));
+    });
+  };
+
+export const updateStatus =
+  (status: string, userId: string): AppThunk =>
+  (dispatch) => {
+    profileAPI.updateStatus(status).then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(getStatus(userId));
+      }
+    });
+  };
+
 export const updateNewPostTextActionCreator = (newText: string) => {
   return {
     type: UPDATE_NEW_POST_TEXT,
     newText: newText,
+  } as const;
+};
+
+export const setStatus = (status: string) => {
+  return {
+    type: SET_STATUS,
+    status,
   } as const;
 };
 
@@ -40,6 +72,7 @@ let initialState: ProfilePageType = {
   ],
   newPostText: "it-kamasutra.com",
   profile: null,
+  status: "",
 };
 
 export const profileReducer = (
@@ -58,6 +91,9 @@ export const profileReducer = (
 
     case UPDATE_NEW_POST_TEXT: {
       return { ...state, newPostText: action.newText };
+    }
+    case SET_STATUS: {
+      return { ...state, status: action.status };
     }
     case SET_USER_PROFILE: {
       return { ...state, profile: action.profile };
