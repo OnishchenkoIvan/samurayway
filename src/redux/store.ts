@@ -10,6 +10,8 @@ import {
 } from "./dialogs-reducer";
 import { ThunkAction } from "redux-thunk";
 import { AppStateType } from "./redux-store";
+import { UsersActionsTypes } from "./users-reducer";
+import { AuthActionsTypes } from "./auth-reducer";
 
 export type StatePropsType = {
   profilePage: ProfilePageType;
@@ -66,7 +68,6 @@ export type ProfilePageType = {
   newPostText: string;
   profile: ProfileType | null;
   status: string;
-  // updateStatus: (value: string) => void;
 };
 
 export type DialogPageType = {
@@ -77,7 +78,7 @@ export type DialogPageType = {
 
 export type SidebarType = {};
 
-export type ActionsTypes =
+export type ProfileActionsTypes =
   | ReturnType<typeof addPostActionCreator>
   | ReturnType<typeof updateNewPostTextActionCreator>
   | ReturnType<typeof updateNewMessageBodyCreator>
@@ -85,9 +86,14 @@ export type ActionsTypes =
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setStatus>;
 
+export type RootActionsTypes =
+  | ProfileActionsTypes
+  | UsersActionsTypes
+  | AuthActionsTypes;
+
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   AppStateType,
   unknown,
-  ActionsTypes
+  RootActionsTypes
 >;

@@ -44,7 +44,7 @@ let initialState: InitialStateType = {
   followingInProgress: [],
 };
 
-type ActionsTypes =
+export type UsersActionsTypes =
   | ReturnType<typeof followSuccess>
   | ReturnType<typeof unfollowSuccess>
   | ReturnType<typeof setUsers>
@@ -55,7 +55,7 @@ type ActionsTypes =
 
 export const usersReducer = (
   state: InitialStateType = initialState,
-  action: ActionsTypes
+  action: UsersActionsTypes
 ): InitialStateType => {
   switch (action.type) {
     case FOLLOW:
@@ -138,7 +138,7 @@ export const toggleFollowingProgress = (
   } as const);
 
 export const getUsers = (currentPage: number, pageSize: number) => {
-  return (dispatch: (callback: ActionsTypes) => void) => {
+  return (dispatch: (callback: UsersActionsTypes) => void) => {
     dispatch(toggleIsFetching(true));
 
     usersAPI.getUsers(currentPage, pageSize).then((data) => {
@@ -150,7 +150,7 @@ export const getUsers = (currentPage: number, pageSize: number) => {
 };
 
 export const follow = (userId: string) => {
-  return (dispatch: (callback: ActionsTypes) => void) => {
+  return (dispatch: (callback: UsersActionsTypes) => void) => {
     dispatch(toggleFollowingProgress(true, userId));
     usersAPI.follow(userId).then((data) => {
       if (data.resultCode === 0) {
@@ -162,7 +162,7 @@ export const follow = (userId: string) => {
 };
 
 export const unfollow = (userId: string) => {
-  return (dispatch: (callback: ActionsTypes) => void) => {
+  return (dispatch: (callback: UsersActionsTypes) => void) => {
     dispatch(toggleFollowingProgress(true, userId));
     usersAPI.unfollow(userId).then((data) => {
       if (data.resultCode === 0) {

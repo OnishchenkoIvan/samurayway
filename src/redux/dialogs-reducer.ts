@@ -1,4 +1,4 @@
-import { ActionsTypes, DialogPageType } from "./store";
+import { ProfileActionsTypes, DialogPageType } from "./store";
 import { v1 } from "uuid";
 
 const UPDATE_NEW_MESSAGE_BODY = "UPDATE_NEW_MESSAGE_BODY";
@@ -39,7 +39,7 @@ let initialState = {
 
 export const dialogsReducer = (
   state: DialogPageType = initialState,
-  action: ActionsTypes
+  action: ProfileActionsTypes
 ): DialogPageType => {
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_BODY:

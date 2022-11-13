@@ -1,5 +1,5 @@
 import {
-  ActionsTypes,
+  ProfileActionsTypes,
   AppThunk,
   PostsType,
   ProfilePageType,
@@ -27,7 +27,7 @@ export const setUserProfile = (profile: ProfileType) => {
 };
 
 export const getUserProfile =
-  (userId: string) => (dispatch: (callback: ActionsTypes) => void) => {
+  (userId: string) => (dispatch: (callback: ProfileActionsTypes) => void) => {
     usersAPI.getProfile(userId).then((response) => {
       dispatch(setUserProfile(response.data));
     });
@@ -77,7 +77,7 @@ let initialState: ProfilePageType = {
 
 export const profileReducer = (
   state: ProfilePageType = initialState,
-  action: ActionsTypes
+  action: ProfileActionsTypes
 ): ProfilePageType => {
   switch (action.type) {
     case ADD_POST: {

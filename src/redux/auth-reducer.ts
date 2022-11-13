@@ -10,11 +10,11 @@ let initialState: HeaderLoginType = {
   isAuth: false,
 };
 
-type ActionsTypes = ReturnType<typeof setAuthUserData>;
+export type AuthActionsTypes = ReturnType<typeof setAuthUserData>;
 
 export const authReducer = (
   state: HeaderLoginType = initialState,
-  action: ActionsTypes
+  action: AuthActionsTypes
 ): HeaderLoginType => {
   switch (action.type) {
     case SET_USERS_DATA:
@@ -33,7 +33,7 @@ export const setAuthUserData = (id: string, email: string, login: string) =>
   ({ type: SET_USERS_DATA, data: { id, email, login } } as const);
 
 export const getAuthUserData =
-  () => (dispatch: (callback: ActionsTypes) => void) => {
+  () => (dispatch: (callback: AuthActionsTypes) => void) => {
     return authAPI.me().then((response) => {
       if (response.data.resultCode === 0) {
         let { id, email, login } = response.data.data;
