@@ -1,40 +1,31 @@
 import React from "react";
-import {
-  addPostActionCreator,
-  updateNewPostTextActionCreator,
-} from "../../../redux/profile-reducer";
+import { addPostActionCreator } from "../../../redux/profile-reducer";
 import { MyPosts } from "./MyPosts";
 import { connect } from "react-redux";
-import { AppStateType, store } from "../../../redux/redux-store";
+import { AppStateType } from "../../../redux/redux-store";
 import { Dispatch } from "redux";
 import { PostsType } from "../../../redux/store";
 
 type MapStatePropsType = {
   posts: PostsType[];
-  newPostText: string;
+  // newPostText: string;
 };
 
 type MapDispatchToPropsType = {
-  onPostChange: (newPostText: string) => void;
-  handleAddPost: () => void;
+  handleAddPost: (newPostText: string) => void;
 };
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     posts: state.profileReducer.posts,
-    newPostText: state.profileReducer.newPostText,
+    // newPostText: state.profileReducer.newPostText,
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
   return {
-    onPostChange: (newPostText: string) => {
-      dispatch(updateNewPostTextActionCreator(newPostText));
-    },
-    handleAddPost: () => {
-      dispatch(
-        addPostActionCreator(store.getState().profileReducer.newPostText)
-      );
+    handleAddPost: (newPostText: string) => {
+      dispatch(addPostActionCreator(newPostText));
     },
   };
 };

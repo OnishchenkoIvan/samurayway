@@ -2,12 +2,8 @@ import {
   addPostActionCreator,
   setStatus,
   setUserProfile,
-  updateNewPostTextActionCreator,
 } from "./profile-reducer";
-import {
-  sendMessageCreator,
-  // updateNewMessageBodyCreator,
-} from "./dialogs-reducer";
+import { sendMessageCreator } from "./dialogs-reducer";
 import { ThunkAction } from "redux-thunk";
 import { AppStateType } from "./redux-store";
 import { UsersActionsTypes } from "./users-reducer";
@@ -65,7 +61,7 @@ export type HeaderLoginType = {
 
 export type ProfilePageType = {
   posts: Array<PostsType>;
-  newPostText: string;
+  // newPostText: string;
   profile: ProfileType | null;
   status: string;
 };
@@ -79,7 +75,7 @@ export type SidebarType = {};
 
 export type ProfileActionsTypes =
   | ReturnType<typeof addPostActionCreator>
-  | ReturnType<typeof updateNewPostTextActionCreator>
+  // | ReturnType<typeof updateNewPostTextActionCreator>
   // | ReturnType<typeof updateNewMessageBodyCreator>
   | ReturnType<typeof sendMessageCreator>
   | ReturnType<typeof setUserProfile>

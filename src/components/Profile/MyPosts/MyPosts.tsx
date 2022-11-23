@@ -1,21 +1,16 @@
-import React, { ChangeEvent } from "react";
+import React, { FC } from "react";
 import s from "./MyPosts.module.css";
 import { Post } from "./Post/Post";
 import { PostsType } from "../../../redux/store";
+import { InjectedFormProps } from "redux-form/lib/reduxForm";
+import { Field, reduxForm } from "redux-form";
 
 type MyPostsPropsType = {
   posts: Array<PostsType>;
-  newPostText: string;
   handleAddPost: (postMessage: string) => void;
-  onPostChange: (value: string) => void;
 };
 
-export const MyPosts = ({
-  handleAddPost,
-  posts,
-  newPostText,
-  onPostChange,
-}: MyPostsPropsType) => {
+export const MyPosts = ({ handleAddPost, posts }: MyPostsPropsType) => {
   const postsElements = posts.map((p) => {
     return (
       <Post
@@ -27,26 +22,34 @@ export const MyPosts = ({
     );
   });
 
-  let addPost = () => {
-    handleAddPost(newPostText);
-  };
-
-  let onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    onPostChange(e.currentTarget.value);
+  let onAddPost = (values: { newPostText: string }) => {
+    handleAddPost(values.newPostText);
   };
 
   return (
     <div className={s.postsBlock}>
-      <h3>my posts</h3>
-      <div>
-        <div>
-          <textarea onChange={onChange} value={newPostText} />
-        </div>
-        <div>
-          <button onClick={addPost}>Add post</button>
-        </div>
-      </div>
+      <h3>My posts</h3>
+      <AddNewPostFormRedux onSubmit={onAddPost} />
       <div className={s.posts}>{postsElements}</div>
     </div>
   );
 };
+
+const AddNewPostForm: FC<InjectedFormProps<{ newPostText: string }>> = (
+  props
+) => {
+  return (
+    <form onSubmit={props.handleSubmit}>
+      <div>
+        <Field component="textarea" name="newPostText" />
+      </div>
+      <div>
+        <button>Add post</button>
+      </div>
+    </form>
+  );
+};
+
+const AddNewPostFormRedux = reduxForm<{ newPostText: string }>({
+  form: "ProfileAddNewPostForm",
+})(AddNewPostForm);

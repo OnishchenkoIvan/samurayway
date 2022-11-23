@@ -24,12 +24,6 @@ export const Dialogs = (props: DialogsPropsType) => {
     return <Message key={m.id} message={m.message} id={m.id} />;
   });
 
-  // let newMessageBody = state.newMessageBody;
-
-  // let onSendMessageClick = () => {
-  //   props.sendMessage();
-  // };
-
   let addNewMessage = (values: { newMessageBody: string }) => {
     props.sendMessage(values.newMessageBody);
   };

@@ -1,15 +1,8 @@
 import { ProfileActionsTypes, DialogPageType } from "./store";
 import { v1 } from "uuid";
 
-// const UPDATE_NEW_MESSAGE_BODY = "UPDATE_NEW_MESSAGE_BODY";
 const SEND_MESSAGE = "SEND_MESSAGE";
 
-// export const updateNewMessageBodyCreator = (newMessage: string) => {
-//   return {
-//     type: UPDATE_NEW_MESSAGE_BODY,
-//     body: newMessage,
-//   } as const;
-// };
 export const sendMessageCreator = (newMessageBody: string) => {
   return {
     type: SEND_MESSAGE,
@@ -32,7 +25,6 @@ let initialState = {
     { id: v1(), message: "Yo" },
     { id: v1(), message: "yooo" },
     { id: v1(), message: "hey" },
-    { id: v1(), message: "ky" },
   ],
 };
 
@@ -41,9 +33,6 @@ export const dialogsReducer = (
   action: ProfileActionsTypes
 ): DialogPageType => {
   switch (action.type) {
-    // case UPDATE_NEW_MESSAGE_BODY:
-    //   return { ...state, newMessageBody: action.body };
-
     case SEND_MESSAGE:
       let body = action.newMessageBody;
       return {

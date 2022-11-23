@@ -9,14 +9,13 @@ import { v1 } from "uuid";
 import { profileAPI, usersAPI } from "../api/api";
 
 const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
 
-export const addPostActionCreator = (postText: string) => {
+export const addPostActionCreator = (newPostText: string) => {
   return {
     type: ADD_POST,
-    postText: postText,
+    newPostText,
   } as const;
 };
 export const setUserProfile = (profile: ProfileType) => {
@@ -51,13 +50,6 @@ export const updateStatus =
     });
   };
 
-export const updateNewPostTextActionCreator = (newText: string) => {
-  return {
-    type: UPDATE_NEW_POST_TEXT,
-    newText: newText,
-  } as const;
-};
-
 export const setStatus = (status: string) => {
   return {
     type: SET_STATUS,
@@ -70,7 +62,6 @@ let initialState: ProfilePageType = {
     { id: v1(), message: "Hi, how are you?", likesCount: 6 },
     { id: v1(), message: "It's my first post", likesCount: 23 },
   ],
-  newPostText: "it-kamasutra.com",
   profile: null,
   status: "",
 };
@@ -83,15 +74,12 @@ export const profileReducer = (
     case ADD_POST: {
       const newPost: PostsType = {
         id: v1(),
-        message: action.postText,
+        message: action.newPostText,
         likesCount: 0,
       };
-      return { ...state, posts: [...state.posts, newPost], newPostText: "" };
+      return { ...state, posts: [...state.posts, newPost] };
     }
 
-    case UPDATE_NEW_POST_TEXT: {
-      return { ...state, newPostText: action.newText };
-    }
     case SET_STATUS: {
       return { ...state, status: action.status };
     }
