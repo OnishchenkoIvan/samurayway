@@ -6,7 +6,7 @@ import {
 } from "./profile-reducer";
 import {
   sendMessageCreator,
-  updateNewMessageBodyCreator,
+  // updateNewMessageBodyCreator,
 } from "./dialogs-reducer";
 import { ThunkAction } from "redux-thunk";
 import { AppStateType } from "./redux-store";
@@ -73,7 +73,6 @@ export type ProfilePageType = {
 export type DialogPageType = {
   dialogs: Array<DialogsType>;
   messages: Array<MessagesType>;
-  newMessageBody: string;
 };
 
 export type SidebarType = {};
@@ -81,7 +80,7 @@ export type SidebarType = {};
 export type ProfileActionsTypes =
   | ReturnType<typeof addPostActionCreator>
   | ReturnType<typeof updateNewPostTextActionCreator>
-  | ReturnType<typeof updateNewMessageBodyCreator>
+  // | ReturnType<typeof updateNewMessageBodyCreator>
   | ReturnType<typeof sendMessageCreator>
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setStatus>;

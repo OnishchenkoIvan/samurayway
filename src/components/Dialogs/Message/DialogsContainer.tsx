@@ -2,7 +2,7 @@ import React from "react";
 import { Dialogs } from "../Dialogs";
 import {
   sendMessageCreator,
-  updateNewMessageBodyCreator,
+  // updateNewMessageBodyCreator,
 } from "../../../redux/dialogs-reducer";
 import { connect } from "react-redux";
 import { AppStateType, store } from "../../../redux/redux-store";
@@ -15,8 +15,8 @@ type MapStatePropsType = {
 };
 
 type MapDispatchToPropsType = {
-  updateNewMessageBody: (body: string) => void;
-  sendMessage: () => void;
+  // updateNewMessageBody: (body: string) => void;
+  sendMessage: (newMessageBody: string) => void;
 };
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
@@ -27,13 +27,11 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
   return {
-    updateNewMessageBody: (body: string) => {
-      dispatch(updateNewMessageBodyCreator(body));
-    },
-    sendMessage: () => {
-      dispatch(
-        sendMessageCreator(store.getState().dialogsReducer.newMessageBody)
-      );
+    // updateNewMessageBody: (body: string) => {
+    //   dispatch(updateNewMessageBodyCreator(body));
+    // },
+    sendMessage: (newMessageBody: string) => {
+      dispatch(sendMessageCreator(newMessageBody));
     },
   };
 };
