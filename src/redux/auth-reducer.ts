@@ -1,4 +1,4 @@
-import { HeaderLoginType } from "./store";
+import { AppThunk, HeaderLoginType } from "./store";
 import { authAPI } from "../api/api";
 
 const SET_USERS_DATA = "SET_USERS_DATA";
@@ -20,8 +20,7 @@ export const authReducer = (
     case SET_USERS_DATA:
       return {
         ...state,
-        ...action.data,
-        isAuth: true,
+        ...action.payload,
       };
 
     default:
@@ -29,15 +28,38 @@ export const authReducer = (
   }
 };
 
-export const setAuthUserData = (id: string, email: string, login: string) =>
-  ({ type: SET_USERS_DATA, data: { id, email, login } } as const);
+export const setAuthUserData = (
+  id: string,
+  email: string,
+  login: string,
+  isAuth: boolean
+) => ({ type: SET_USERS_DATA, payload: { id, email, login, isAuth } } as const);
 
 export const getAuthUserData =
-  () => (dispatch: (callback: AuthActionsTypes) => void) => {
+  (): AppThunk => (dispatch: (callback: AuthActionsTypes) => void) => {
     return authAPI.me().then((response) => {
       if (response.data.resultCode === 0) {
         let { id, email, login } = response.data.data;
-        dispatch(setAuthUserData(id, email, login));
+        dispatch(setAuthUserData(id, email, login, true));
+      }
+    });
+  };
+
+export const login =
+  (email: string, password: string, rememberMe: boolean): AppThunk =>
+  (dispatch) => {
+    authAPI.login(email, password, rememberMe).then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(getAuthUserData());
+      }
+    });
+  };
+
+export const logout =
+  (): AppThunk => (dispatch: (callback: AuthActionsTypes) => void) => {
+    authAPI.logout().then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(setAuthUserData("", "", "", false));
       }
     });
   };

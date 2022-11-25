@@ -2,8 +2,14 @@ import React from "react";
 import s from "./Header.module.css";
 import { NavLink } from "react-router-dom";
 import { HeaderLoginType } from "../../redux/store";
+import { logout } from "../../redux/auth-reducer";
+import { useAppDispatch } from "../../redux/redux-store";
 
 export const Header = (props: HeaderLoginType) => {
+  const dispatch = useAppDispatch();
+  const onClickLogoutButton = () => {
+    dispatch(logout());
+  };
   return (
     <header className={s.header}>
       <img
@@ -11,7 +17,14 @@ export const Header = (props: HeaderLoginType) => {
         alt={"avatar"}
       />
       <div className={s.loginBlock}>
-        {props.isAuth ? props.login : <NavLink to={"/login"}>Login</NavLink>}
+        {props.isAuth ? (
+          <div>
+            {props.login} -{" "}
+            <button onClick={onClickLogoutButton}>Log out</button>
+          </div>
+        ) : (
+          <NavLink to={"/login"}>Login</NavLink>
+        )}
       </div>
     </header>
   );

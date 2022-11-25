@@ -2,9 +2,17 @@ import React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
 import { Input } from "../common/FormsControls/FormsControls";
 import { required } from "../../utils/validators/validators";
+import { connect } from "react-redux";
+import { login } from "../../redux/auth-reducer";
+import {
+  AppStateType,
+  useAppDispatch,
+  useAppSelector,
+} from "../../redux/redux-store";
+import { Redirect } from "react-router-dom";
 
 type FormDataType = {
-  login: string;
+  email: string;
   password: string;
   rememberMe: boolean;
 };
@@ -16,8 +24,8 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
         <Field
           validate={[required]}
           component={Input}
-          name={"login"}
-          placeholder={"Login"}
+          name={"email"}
+          placeholder={"Email"}
         />
 
         <Field
@@ -25,6 +33,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
           placeholder={"Password"}
           name={"password"}
           component={Input}
+          type={"password"}
         />
       </div>
       <div>
@@ -42,14 +51,26 @@ const LoginReduxForm = reduxForm<FormDataType>({
   form: "login",
 })(LoginForm);
 
-export const Login = () => {
+const Login = () => {
+  const dispatch = useAppDispatch();
+  const isAuth = useAppSelector((state) => state.authReducer.isAuth);
   const onSubmit = (formData: FormDataType) => {
-    console.log(formData);
+    dispatch(login(formData.email, formData.password, formData.rememberMe));
   };
-  return (
-    <div>
-      <h1>Login</h1>
-      <LoginReduxForm onSubmit={onSubmit} />
-    </div>
-  );
+
+  if (isAuth) {
+    return <Redirect to={"/profile"} />;
+  } else
+    return (
+      <div>
+        <h1>Login</h1>
+        <LoginReduxForm onSubmit={onSubmit} />
+      </div>
+    );
 };
+
+const mapStateToProps = (state: AppStateType) => ({
+  isAuth: state.authReducer.isAuth,
+});
+
+export default connect(mapStateToProps, { login })(Login);
