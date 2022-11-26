@@ -6,7 +6,7 @@ import { HeaderLoginType } from "../../redux/store";
 import { AppStateType } from "../../redux/redux-store";
 
 type MapStatePropsType = {
-  id: string | null;
+  id: string | undefined;
   email: string | null;
   login: string | null;
   isAuth: boolean;

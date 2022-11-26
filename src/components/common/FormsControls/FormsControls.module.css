@@ -3,3 +3,9 @@
 {
     border: 1px solid red;
 }
+
+.formSummaryError {
+    border: red 1px solid;
+    padding: 5px;
+    color: darkred;
+}

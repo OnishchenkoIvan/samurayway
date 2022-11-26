@@ -1,12 +1,14 @@
 import { AppThunk, HeaderLoginType } from "./store";
 import { authAPI } from "../api/api";
+import { stopSubmit } from "redux-form";
+import thunkMiddleware from "redux-thunk";
 
 const SET_USERS_DATA = "SET_USERS_DATA";
 
 let initialState: HeaderLoginType = {
-  id: null,
-  email: null,
-  login: null,
+  id: "",
+  email: "",
+  login: "",
   isAuth: false,
 };
 
@@ -48,9 +50,19 @@ export const getAuthUserData =
 export const login =
   (email: string, password: string, rememberMe: boolean): AppThunk =>
   (dispatch) => {
+    console.log("dispatch", dispatch);
+    console.log("thunkMiddleware", thunkMiddleware);
     authAPI.login(email, password, rememberMe).then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(getAuthUserData());
+      } else {
+        let message =
+          response.data.messages.length > 0
+            ? response.data.messages[0]
+            : "Some error";
+        dispatch(stopSubmit("login", { _error: message }));
+        // let action = stopSubmit("login", { email: "Email is wrong" });
+        // dispatch(action);
       }
     });
   };

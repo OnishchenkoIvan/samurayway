@@ -8,6 +8,7 @@ import { ThunkAction } from "redux-thunk";
 import { AppStateType } from "./redux-store";
 import { UsersActionsTypes } from "./users-reducer";
 import { AuthActionsTypes } from "./auth-reducer";
+import { FormAction } from "redux-form/lib/actions";
 
 export type StatePropsType = {
   profilePage: ProfilePageType;
@@ -53,7 +54,7 @@ export type ProfileType = {
 };
 
 export type HeaderLoginType = {
-  id: string | null;
+  id: string | undefined;
   email: string | null;
   login: string | null;
   isAuth: boolean;
@@ -81,7 +82,8 @@ export type ProfileActionsTypes =
 export type RootActionsTypes =
   | ProfileActionsTypes
   | UsersActionsTypes
-  | AuthActionsTypes;
+  | AuthActionsTypes
+  | FormAction;
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
