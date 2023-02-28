@@ -12,6 +12,14 @@ const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
 
+let initialState: ProfilePageType = {
+  posts: [
+    { id: v1(), message: "Hi, how are you?", likesCount: 6 },
+    { id: v1(), message: "It's my first post", likesCount: 23 },
+  ],
+  profile: null,
+  status: "",
+};
 export const addPostActionCreator = (newPostText: string) => {
   return {
     type: ADD_POST,
@@ -55,15 +63,6 @@ export const setStatus = (status: string) => {
     type: SET_STATUS,
     status,
   } as const;
-};
-
-let initialState: ProfilePageType = {
-  posts: [
-    { id: v1(), message: "Hi, how are you?", likesCount: 6 },
-    { id: v1(), message: "It's my first post", likesCount: 23 },
-  ],
-  profile: null,
-  status: "",
 };
 
 export const profileReducer = (
